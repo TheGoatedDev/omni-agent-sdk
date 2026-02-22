@@ -1,6 +1,6 @@
 {
 	"name": "@omni-agent-sdk/provider-opencode",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"license": "MIT",
 	"type": "module",
 	"exports": {
@@ -9,7 +9,9 @@
 			"import": "./dist/index.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json",
 		"check": "tsc --noEmit"
