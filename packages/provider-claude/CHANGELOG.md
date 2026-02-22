@@ -1,5 +1,11 @@
 # @omni-agent-sdk/provider-claude
 
+## 1.1.1
+
+### Patch Changes
+
+- 04dcf0f: Fixing Multi-Turn
+
 ## 1.1.0
 
 ### Minor Changes
