@@ -1,5 +1,11 @@
 # @omni-agent-sdk/provider-claude
 
+## 1.1.0
+
+### Minor Changes
+
+- 194bb30: List Session Added
+
 ## 1.0.0
 
 ### Major Changes
