@@ -48,6 +48,7 @@ class MockFailingAgent implements OmniAgent {
 	}
 
 	async resumeSession(sessionId: string, options?: ResumeSessionOptions): Promise<OmniSession> {
+		// Resume paths are session-ID-bound; mock failure only applies to createSession.
 		return this._inner.resumeSession(sessionId, options);
 	}
 
