@@ -3,6 +3,7 @@
 	"private": true,
 	"license": "MIT",
 	"packageManager": "pnpm@9.15.0",
+	"repository": "https://github.com/thegoateddev/omni-agent-sdk",
 	"scripts": {
 		"build": "turbo run build",
 		"check": "turbo run check",
