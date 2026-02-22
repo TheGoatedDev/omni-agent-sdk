@@ -1,0 +1,13 @@
+{
+	"$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+	"changelog": "@changesets/cli/changelog",
+	"commit": false,
+	"fixed": [],
+	"linked": [
+		["@omni-agent-sdk/core", "@omni-agent-sdk/provider-claude", "@omni-agent-sdk/provider-codex", "@omni-agent-sdk/provider-opencode"]
+	],
+	"access": "public",
+	"baseBranch": "main",
+	"updateInternalDependencies": "patch",
+	"ignore": ["@omni-agent-sdk/examples"]
+}
