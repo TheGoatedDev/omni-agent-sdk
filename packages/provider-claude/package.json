@@ -1,0 +1,27 @@
+{
+	"name": "@omni-agent-sdk/provider-claude",
+	"version": "0.0.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@omni-agent-sdk/core": "workspace:*"
+	},
+	"peerDependencies": {
+		"@anthropic-ai/claude-agent-sdk": ">=0.0.1"
+	},
+	"peerDependenciesMeta": {
+		"@anthropic-ai/claude-agent-sdk": {
+			"optional": false
+		}
+	}
+}
