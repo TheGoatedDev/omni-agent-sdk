@@ -10,7 +10,7 @@
  *   ANTHROPIC_API_KEY=sk-... npx tsx examples/manager-advanced.ts
  */
 
-import { AgentManager, OmniAgentError } from "@omni-agent-sdk/core";
+import { AgentManager, AgentNotFoundError, OmniAgentError } from "@omni-agent-sdk/core";
 import type {
 	CreateSessionOptions,
 	OmniAgent,
@@ -119,7 +119,7 @@ console.log(`tryAgent("gemini"): ${maybeGemini === undefined ? "undefined (not r
 try {
 	manager.agent("gemini");
 } catch (err) {
-	if (err instanceof OmniAgentError) {
+	if (err instanceof AgentNotFoundError) {
 		console.log(`agent("gemini") threw ${err.name}: ${err.message}`);
 	}
 }
