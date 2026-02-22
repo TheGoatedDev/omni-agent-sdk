@@ -1,0 +1,11 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"skipLibCheck": true,
+		"paths": {
+			"@omni-agent-sdk/core": ["../core/src/index.ts"]
+		}
+	},
+	"include": ["src/**/*", "../core/src/**/*"]
+}
