@@ -5,7 +5,21 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"check": "tsc --noEmit"
+		"check": "tsc --noEmit",
+		"example": "env -u CLAUDECODE tsx",
+		"basic-prompt": "pnpm example basic-prompt.ts",
+		"streaming": "pnpm example streaming.ts",
+		"multi-turn": "pnpm example multi-turn.ts",
+		"provider-agnostic": "pnpm example provider-agnostic.ts",
+		"error-handling": "pnpm example error-handling.ts",
+		"abort-signal": "pnpm example abort-signal.ts",
+		"budget-limits": "pnpm example budget-limits.ts",
+		"structured-output": "pnpm example structured-output.ts",
+		"session-management": "pnpm example session-management.ts",
+		"mcp-servers": "pnpm example mcp-servers.ts",
+		"custom-permissions": "pnpm example custom-permissions.ts",
+		"provider-specific": "pnpm example provider-specific.ts",
+		"manager-basics": "pnpm example manager-basics.ts"
 	},
 	"dependencies": {
 		"@omni-agent-sdk/core": "workspace:*",

@@ -4,6 +4,7 @@
 		"outDir": "./dist",
 		"skipLibCheck": true,
 		"lib": ["ES2022", "ESNext.AsyncIterable", "ESNext.Symbol", "ESNext.Disposable", "DOM"],
+		"types": ["node"],
 		"paths": {
 			"@omni-agent-sdk/core": ["../core/src/index.ts"]
 		}

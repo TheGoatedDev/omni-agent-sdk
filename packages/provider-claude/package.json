@@ -26,5 +26,8 @@
 		"@anthropic-ai/claude-agent-sdk": {
 			"optional": false
 		}
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0"
 	}
 }

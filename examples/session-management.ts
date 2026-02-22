@@ -22,15 +22,16 @@ const agent = await createProviderAgent();
 console.log("=== Step 1: Create initial session ===\n");
 
 const session1 = await agent.createSession({ cwd: process.cwd() });
-const sessionId = session1.id;
-
-console.log(`Session ID: ${sessionId}`);
 
 const result1 = await session1.prompt({
 	message: "Remember the number 42.  I will ask you about it later.",
 });
 console.log("Turn 1:", result1.text);
 printUsage(result1.usage);
+
+// Session ID is resolved lazily from the first response — read it after prompt
+const sessionId = session1.id;
+console.log(`Session ID: ${sessionId}`);
 
 // Dispose the session — in a real app you might store sessionId to a DB here
 await session1.dispose();

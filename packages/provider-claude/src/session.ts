@@ -18,10 +18,16 @@ export class ClaudeSession implements OmniSession {
 	private _sessionId: string | undefined;
 	private _disposed = false;
 	private _currentStream: ClaudeStream | undefined;
+	private readonly _onSessionResolved: ((id: string) => void) | undefined;
 
-	constructor(config: ClaudeAgentConfig, resumeSessionId?: string) {
+	constructor(
+		config: ClaudeAgentConfig,
+		resumeSessionId?: string,
+		onSessionResolved?: (id: string) => void,
+	) {
 		this._config = config;
 		this._sessionId = resumeSessionId;
+		this._onSessionResolved = onSessionResolved;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -89,6 +95,7 @@ export class ClaudeSession implements OmniSession {
 		return wrapStreamForSessionCapture(stream, (sid) => {
 			if (this._sessionId === undefined) {
 				this._sessionId = sid;
+				this._onSessionResolved?.(sid);
 			}
 		});
 	}
