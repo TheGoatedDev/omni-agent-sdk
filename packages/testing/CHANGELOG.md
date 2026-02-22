@@ -1,5 +1,12 @@
 # @omni-agent-sdk/testing
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [04dcf0f]
+  - @omni-agent-sdk/provider-claude@1.1.1
+
 ## 1.0.1
 
 ### Patch Changes
