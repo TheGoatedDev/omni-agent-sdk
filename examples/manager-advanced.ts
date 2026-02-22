@@ -1,10 +1,11 @@
 /**
  * manager-advanced.ts — withFallback(), dynamic registration, and lifecycle
  *
- * Covers three patterns beyond basic routing:
+ * Covers four patterns beyond basic routing:
  *   1. withFallback()  — route any async operation through the fallback machinery
  *   2. Dynamic register/unregister — update the registry at runtime
  *   3. tryAgent() vs agent() — safe vs throwing lookup
+ *   4. Parallel dispose — tear down all agents in one await
  *
  * Run:
  *   ANTHROPIC_API_KEY=sk-... npx tsx examples/manager-advanced.ts
@@ -71,7 +72,9 @@ const manager = new AgentManager({
 	fallback: { enabled: true },
 });
 
-manager.register("flaky", new FlakyAgent("primary", await createProviderAgent(), 1));
+// No explicit fallback.order — withFallback() iterates agents in registration order
+// ("flaky" first, then "stable"), so registration order determines the fallback sequence.
+manager.register("flaky", new FlakyAgent("primary", await createProviderAgent()));
 manager.register("stable", await createProviderAgent());
 
 const result = await manager.withFallback(async (agent, name) => {
