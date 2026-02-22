@@ -19,7 +19,9 @@
 		"mcp-servers": "pnpm example mcp-servers.ts",
 		"custom-permissions": "pnpm example custom-permissions.ts",
 		"provider-specific": "pnpm example provider-specific.ts",
-		"manager-basics": "pnpm example manager-basics.ts"
+		"manager-basics": "pnpm example manager-basics.ts",
+		"manager-fallback": "pnpm example manager-fallback.ts",
+		"manager-advanced": "pnpm example manager-advanced.ts"
 	},
 	"dependencies": {
 		"@omni-agent-sdk/core": "workspace:*",

@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import type { CreateSessionOptions, OmniAgent, ResumeSessionOptions, SessionInfo } from "@omni-agent-sdk/core";
 import { ClaudeSession } from "./session.js";
 import { readDiskSessions } from "./session-store.js";
@@ -23,10 +24,10 @@ export class ClaudeAgent implements OmniAgent {
 	// ---------------------------------------------------------------------------
 
 	async createSession(options?: CreateSessionOptions): Promise<ClaudeSession> {
+		const id = randomUUID();
+		this._seen.set(id, new Date());
 		const merged = this._mergeOptions(options);
-		return new ClaudeSession(merged, undefined, (id) => {
-			if (!this._seen.has(id)) this._seen.set(id, new Date());
-		});
+		return new ClaudeSession(merged, id, false);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -36,9 +37,7 @@ export class ClaudeAgent implements OmniAgent {
 	async resumeSession(sessionId: string, options?: ResumeSessionOptions): Promise<ClaudeSession> {
 		if (!this._seen.has(sessionId)) this._seen.set(sessionId, new Date());
 		const merged = this._mergeOptions(options);
-		return new ClaudeSession(merged, sessionId, (id) => {
-			if (!this._seen.has(id)) this._seen.set(id, new Date());
-		});
+		return new ClaudeSession(merged, sessionId, true);
 	}
 
 	// ---------------------------------------------------------------------------

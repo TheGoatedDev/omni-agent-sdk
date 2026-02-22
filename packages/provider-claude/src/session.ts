@@ -10,36 +10,32 @@ const PROVIDER = "claude";
 /**
  * ClaudeSession implements OmniSession for the claude-agent-sdk provider.
  *
- * The session ID is lazily resolved from the first streaming message and
- * cached so subsequent prompts resume the same conversation.
+ * For new sessions the ID is pre-assigned via crypto.randomUUID() so it is
+ * available immediately on session.id without waiting for a prompt response.
+ * For resumed sessions the ID is the one passed to resumeSession().
  */
 export class ClaudeSession implements OmniSession {
 	private readonly _config: ClaudeAgentConfig;
-	private _sessionId: string | undefined;
+	private readonly _sessionId: string;
+	/** True when the next prompt should use `resume` rather than `sessionId`. */
+	private _shouldResume: boolean;
 	private _disposed = false;
 	private _currentStream: ClaudeStream | undefined;
-	private readonly _onSessionResolved: ((id: string) => void) | undefined;
 
-	constructor(
-		config: ClaudeAgentConfig,
-		resumeSessionId?: string,
-		onSessionResolved?: (id: string) => void,
-	) {
+	constructor(config: ClaudeAgentConfig, sessionId: string, isResume: boolean) {
 		this._config = config;
-		this._sessionId = resumeSessionId;
-		this._onSessionResolved = onSessionResolved;
+		this._sessionId = sessionId;
+		// Resumed sessions always use `resume`; new sessions use `sessionId` on the
+		// first prompt then switch to `resume` for all subsequent turns.
+		this._shouldResume = isResume;
 	}
 
 	// ---------------------------------------------------------------------------
 	// OmniSession: id
 	// ---------------------------------------------------------------------------
 
-	/**
-	 * The resolved session ID. Returns an empty string before the first prompt
-	 * completes; populated after the first ClaudeStream resolves a session_id.
-	 */
 	get id(): string {
-		return this._sessionId ?? "";
+		return this._sessionId;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -62,7 +58,6 @@ export class ClaudeSession implements OmniSession {
 			});
 		}
 
-		// Merge session-level config with prompt-level overrides
 		const queryOptions = mapConfig(this._config, {
 			model: input.model,
 			systemPrompt: input.systemPrompt,
@@ -70,12 +65,13 @@ export class ClaudeSession implements OmniSession {
 			maxBudgetUsd: input.maxBudgetUsd,
 		});
 
-		// Enable streaming partial messages for real-time event emission
 		queryOptions.includePartialMessages = true;
 
-		// Resume an existing session if we have one
-		if (this._sessionId !== undefined) {
+		if (this._shouldResume) {
 			queryOptions.resume = this._sessionId;
+		} else {
+			queryOptions.sessionId = this._sessionId;
+			this._shouldResume = true;
 		}
 
 		let claudeQuery: import("@anthropic-ai/claude-agent-sdk").Query;
@@ -92,12 +88,7 @@ export class ClaudeSession implements OmniSession {
 
 		const stream = new ClaudeStream(claudeQuery, input.signal);
 		this._currentStream = stream;
-		return wrapStreamForSessionCapture(stream, (sid) => {
-			if (this._sessionId === undefined) {
-				this._sessionId = sid;
-				this._onSessionResolved?.(sid);
-			}
-		});
+		return stream;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -120,52 +111,4 @@ export class ClaudeSession implements OmniSession {
 			await this.abort();
 		}
 	}
-}
-
-// ---------------------------------------------------------------------------
-// Internal helper: session ID capture wrapper
-// ---------------------------------------------------------------------------
-
-/**
- * Wraps a ClaudeStream to capture the resolved session ID after the stream
- * is fully consumed (either via async iteration or result()).
- */
-function wrapStreamForSessionCapture(
-	inner: ClaudeStream,
-	onSessionId: (id: string) => void,
-): OmniStream {
-	function captureFromResult(result: PromptResult): PromptResult {
-		if (result.sessionId.length > 0) {
-			onSessionId(result.sessionId);
-		}
-		return result;
-	}
-
-	const wrapper: OmniStream = {
-		async *[Symbol.asyncIterator]() {
-			for await (const event of inner) {
-				yield event;
-			}
-			// Capture session ID after iteration completes
-			const sid = inner.sessionId;
-			if (sid !== undefined && sid.length > 0) {
-				onSessionId(sid);
-			}
-		},
-
-		async result(): Promise<PromptResult> {
-			const result = await inner.result();
-			return captureFromResult(result);
-		},
-
-		async abort(): Promise<void> {
-			await inner.abort();
-		},
-
-		async [Symbol.asyncDispose](): Promise<void> {
-			await inner.abort();
-		},
-	};
-
-	return wrapper;
 }

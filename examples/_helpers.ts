@@ -121,7 +121,7 @@ export function printUsage(usage: OmniUsage): void {
 		parts.push(`time: ${usage.durationMs}ms`);
 	}
 	if (usage.numTurns !== undefined) {
-		parts.push(`turns: ${usage.numTurns}`);
+		parts.push(`agentic_turns: ${usage.numTurns}`);
 	}
 	if (parts.length > 0) {
 		console.log(`[usage] ${parts.join(" | ")}`);
