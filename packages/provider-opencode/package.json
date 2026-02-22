@@ -1,0 +1,27 @@
+{
+	"name": "@omni-agent-sdk/provider-opencode",
+	"version": "0.0.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@omni-agent-sdk/core": "workspace:*"
+	},
+	"peerDependencies": {
+		"@opencode-ai/sdk": ">=1.0.0"
+	},
+	"peerDependenciesMeta": {
+		"@opencode-ai/sdk": {
+			"optional": false
+		}
+	}
+}

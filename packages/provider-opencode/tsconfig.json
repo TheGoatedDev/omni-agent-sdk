@@ -1,0 +1,12 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"skipLibCheck": true,
+		"lib": ["ES2022", "ESNext.AsyncIterable", "ESNext.Symbol", "ESNext.Disposable", "DOM"],
+		"paths": {
+			"@omni-agent-sdk/core": ["../core/src/index.ts"]
+		}
+	},
+	"include": ["src/**/*", "../core/src/**/*"]
+}
