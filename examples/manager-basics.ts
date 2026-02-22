@@ -53,6 +53,7 @@ const result1 = await session1.prompt({
 	message: 'Reply with exactly: "Default agent answered"',
 });
 console.log(result1.text);
+printUsage(result1.usage);
 await session1.dispose();
 
 // ---------------------------------------------------------------------------
@@ -67,6 +68,7 @@ const result2 = await session2.prompt({
 	message: 'Reply with exactly: "Now routed to agent-b"',
 });
 console.log(result2.text);
+printUsage(result2.usage);
 await session2.dispose();
 
 // ---------------------------------------------------------------------------
