@@ -1,0 +1,20 @@
+{
+	"name": "@omni-agent-sdk/examples",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@omni-agent-sdk/core": "workspace:*",
+		"@omni-agent-sdk/provider-claude": "workspace:*",
+		"@omni-agent-sdk/provider-codex": "workspace:*",
+		"@anthropic-ai/claude-agent-sdk": "*",
+		"@openai/codex-sdk": "*"
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"tsx": "^4.0.0"
+	}
+}

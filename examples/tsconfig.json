@@ -1,0 +1,22 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"skipLibCheck": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"lib": ["ES2022", "ESNext.AsyncIterable", "ESNext.Symbol", "ESNext.Disposable", "DOM"],
+		"types": ["node"],
+		"paths": {
+			"@omni-agent-sdk/core": ["../packages/core/src/index.ts"],
+			"@omni-agent-sdk/provider-claude": ["../packages/provider-claude/src/index.ts"],
+			"@omni-agent-sdk/provider-codex": ["../packages/provider-codex/src/index.ts"]
+		}
+	},
+	"include": [
+		"./**/*.ts",
+		"../packages/core/src/**/*",
+		"../packages/provider-claude/src/**/*",
+		"../packages/provider-codex/src/**/*"
+	]
+}
