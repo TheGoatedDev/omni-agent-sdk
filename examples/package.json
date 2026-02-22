@@ -2,6 +2,7 @@
 	"name": "@omni-agent-sdk/examples",
 	"version": "0.0.0",
 	"private": true,
+	"license": "MIT",
 	"type": "module",
 	"scripts": {
 		"check": "tsc --noEmit"
