@@ -1,0 +1,24 @@
+{
+	"name": "@omni-agent-sdk/testing",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"test": "vitest run",
+		"test:integration": "vitest run"
+	},
+	"dependencies": {
+		"@omni-agent-sdk/core": "workspace:*",
+		"@omni-agent-sdk/provider-claude": "workspace:*",
+		"@omni-agent-sdk/provider-codex": "workspace:*",
+		"@omni-agent-sdk/provider-opencode": "workspace:*"
+	},
+	"devDependencies": {
+		"@anthropic-ai/claude-agent-sdk": "*",
+		"@openai/codex-sdk": "*",
+		"@opencode-ai/sdk": "*",
+		"@types/node": "^22.0.0",
+		"typescript": "^5.7.0",
+		"vitest": "^3.0.0"
+	}
+}

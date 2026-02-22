@@ -1,0 +1,21 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"skipLibCheck": true,
+		"types": ["node", "vitest/globals"],
+		"paths": {
+			"@omni-agent-sdk/core": ["../core/src/index.ts"],
+			"@omni-agent-sdk/provider-claude": ["../provider-claude/src/index.ts"],
+			"@omni-agent-sdk/provider-codex": ["../provider-codex/src/index.ts"],
+			"@omni-agent-sdk/provider-opencode": ["../provider-opencode/src/index.ts"]
+		}
+	},
+	"include": [
+		"src/**/*",
+		"../core/src/**/*",
+		"../provider-claude/src/**/*",
+		"../provider-codex/src/**/*",
+		"../provider-opencode/src/**/*"
+	]
+}
